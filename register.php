@@ -67,6 +67,8 @@ include 'style.php';
                                         </div>
                                         <div class="card-footer">
                                             <input type="submit" class="btn btn-danger" value="Register">
+                                            <span class=" float-end">I have my
+                                                account<a href="login.php">Login here</a></span>
                                         </div>
                                     </form>
                                 </div>
