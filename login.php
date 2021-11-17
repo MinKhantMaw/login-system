@@ -8,7 +8,7 @@ include 'style.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Login</title>
     <style>
     .first-card {
         background-color: #fdfdfd;
@@ -55,7 +55,7 @@ include 'style.php';
                                         <div class="card-footer">
                                             <input type="submit" class="btn btn-danger" value="Login">
                                             <span class=" float-end">I have no
-                                                account<a href="login.php">Register here</a></span>
+                                                account..!<a href="register.php">Register here</a></span>
                                         </div>
                                     </form>
                                 </div>
