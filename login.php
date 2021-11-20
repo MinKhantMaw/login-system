@@ -1,5 +1,7 @@
 <?php
+include 'db.php';
 include 'style.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +23,26 @@ include 'style.php';
 </head>
 
 <body>
+    <?php 
+        if(isset($_POST['login'])){
+            $email = $_POST['email'];
+            $password = md5($_POST['password']);
+
+            $user_result = mysqli_query($db,"select * from users where email='$email' and password='$password'");
+            
+            $user_count = mysqli_num_rows($user_result);
+
+            if ($user_count===1) {
+                $user_array = mysqli_fetch_assoc($user_result);
+                $_SESSION['user_array'] =$user_array;
+                header("Location:admin-dashboard.php");
+            }else{
+                $error="Invalid email or password ";
+            }
+            
+            
+        }
+     ?>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -36,15 +58,16 @@ include 'style.php';
                             </div>
                         </div>
                     </div>
+                    <span class="text-danger text-center mt-2"><?php echo $error; ?></span>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 offset-3">
                                 <div class="card mt-2 shadow second-card">
-                                    <form action="">
+                                    <form action="login.php" method="post">
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <label for="">Name</label>
-                                                <input type="text" name="name" class="form-control" placeholder="">
+                                                <label for="">Email</label>
+                                                <input type="email" name="email" class="form-control" placeholder="">
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Password</label>
@@ -53,7 +76,7 @@ include 'style.php';
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <input type="submit" class="btn btn-danger" value="Login">
+                                            <input type="submit" name="login" class="btn btn-danger" value="Login">
                                             <span class=" float-end">I have no
                                                 account..!<a href="register.php">Register here</a></span>
                                         </div>

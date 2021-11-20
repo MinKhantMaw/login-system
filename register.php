@@ -54,13 +54,17 @@ error_reporting(E_ALL);
         if (empty($confirm_password)) {
             $confirm_passwordError = "The confirm_password field is required";
         }
+        if (($confirm_password != $password)) {
+            $confirm_passwordError = "The password do't match ";
+        }
 
-        if (!empty($name) && !empty($email) && !empty($address) && !empty($password) && !empty($confirm_password)) {
-            $query = "INSERT INTO users (name,email,address,password) VALUES ('$name','$email','$address','$password')";
+        if (!empty($name) && !empty($email) && !empty($address) && !empty($password) && !empty($confirm_password) && $confirm_password == $password) {
+            $encryptPassword=md5($password);
+            $query = "INSERT INTO users (name,email,address,password) VALUES ('$name','$email','$address','$encryptPassword')";
             $result = mysqli_query($db, $query);
             if ($result == true) {
                 echo "<script>alert('Registration Successfully')</script>";
-                //header("Location:login.php");
+                header("Location:login.php");
             } else {
                 die("Registration Fail" . mysqli_error($db));
             }
@@ -90,34 +94,40 @@ error_reporting(E_ALL);
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="">Name</label>
-                                                <input type="text" name="name" class="form-control is-invalid"
-                                                    placeholder="">
-                                                <span class="text-danger"><?php echo "$nameError"; ?></span>
+                                                <input type="text" name="name"
+                                                    class="form-control <?php if($nameError != '' ) {?> is-invalid <?php } ?>"
+                                                    placeholder="Enter your Name">
+
+                                                <span class=" text-danger"><?php echo "$nameError"; ?></span>
                                             </div>
-                                            <div class="form-group">
+                                            <div class=" form-group">
                                                 <label for="">Email</label>
-                                                <input type="email" name="email" class="form-control is-invalid"
-                                                    placeholder="">
+                                                <input type="email" name="email"
+                                                    class="form-control  <?php if($emailError != '' ) {?> is-invalid <?php } ?>"
+                                                    placeholder="Enter your Email">
                                                 <span class="text-danger"><?php echo "$emailError"; ?></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Address</label>
                                                 <textarea name="address" cols="20" rows="5"
-                                                    class="form-control is-invalid"></textarea>
-                                                <span class="text-danger"><?php echo "$addressError"; ?></span>
+                                                    class="form-control  <?php if($addressError != '' ) {?> is-invalid <?php } ?>"
+                                                    placeholder="Enter your address"></textarea>
+                                                <span class=" text-danger"><?php echo "$addressError"; ?></span>
 
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Password</label>
-                                                <input type="password" name="password" class="form-control is-invalid"
-                                                    placeholder="">
+                                                <input type="password" name="password"
+                                                    class="form-control  <?php if($passwordError != '' ) {?> is-invalid <?php } ?>"
+                                                    placeholder="Enter your Password">
                                                 <span class="text-danger"><?php echo "$passwordError"; ?></span>
 
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Confirm Password</label>
                                                 <input type="password" name="confirm_password"
-                                                    class="form-control is-invalid" placeholder="">
+                                                    class="form-control  <?php if($confirm_passwordError != '' ) {?> is-invalid <?php } ?>"
+                                                    placeholder="Enter your confirm_password">
                                                 <span
                                                     class="text-danger "><?php echo "$confirm_passwordError"; ?></span>
 
