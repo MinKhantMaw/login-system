@@ -88,8 +88,6 @@ if (!isset($_SESSION['user_array'])) {
                                         <?php
                                         }
                                         ?>
-
-
                                     </tbody>
                                 </table>
                             </div>
